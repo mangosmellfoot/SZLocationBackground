@@ -1,0 +1,2 @@
+# SZLocationBackground
+LocationBackground for CLLocationManager
