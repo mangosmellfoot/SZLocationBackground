@@ -7,9 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreLocation/CoreLocation.h>
 
 @interface ViewController : UIViewController
 
+/**
+ 位置管理器
+ */
+@property (strong,nonatomic) CLLocationManager * locationMananger;
 
 @end
 

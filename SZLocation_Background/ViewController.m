@@ -7,12 +7,13 @@
 //
 
 #import "ViewController.h"
-#import <CoreLocation/CoreLocation.h>
+static unsigned int count = 0;
 
 @interface ViewController ()<CLLocationManagerDelegate>
 
-@property (strong,nonatomic) CLLocationManager * locationMananger;                  //位置管理器
 @property (strong,nonatomic) CLGeocoder * coder;                                    //位置编码器
+@property (weak,nonatomic) UILabel * label;
+
 
 @end
 
@@ -21,6 +22,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    
+    UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width * 0.5 - 100, [UIScreen mainScreen].bounds.size.height * 0.5 - 50, 200, 100)];
+    [self.view addSubview:label];
+    label.backgroundColor = [UIColor grayColor];
+    label.text = @"未开始定位";
+    label.layer.masksToBounds = YES;
+    label.layer.cornerRadius = 4.f;
+    self.label = label;
     
     if ([CLLocationManager locationServicesEnabled]) {
         [self.locationMananger requestAlwaysAuthorization];
@@ -70,6 +79,7 @@
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations {
     [self.coder reverseGeocodeLocation:[locations lastObject] completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
         NSLog(@"\nlocations: %@ \n",placemarks);
+        self.label.text = [NSString stringWithFormat:@"已经定位：%d", ++count];
     }];
 }
 
